@@ -29,6 +29,7 @@ jobs:
           context: ./FoodRecipe
           file: ./FoodRecipe/Dockerfile
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/foodrecipie-kube-backend:latest
 
       - name: Build and push frontend image
@@ -37,4 +38,5 @@ jobs:
           context: ./client
           file: ./client/Dockerfile
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/foodrecipie-kube-frontend:latest
