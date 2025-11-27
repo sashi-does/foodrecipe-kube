@@ -38,19 +38,3 @@ jobs:
           file: ./client/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/foodrecipie-kube-frontend:latest
-
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            cd /home/ubuntu/food-recipie
-            git fetch origin main
-            git reset --hard origin/main
-            # Make sure old containers/images don’t block updates
-            docker compose -f Docker-compose.yml down
-            docker compose -f Docker-compose.yml pull
-            docker compose -f Docker-compose.yml up -d --force-recreate
-            docker image prune -f
